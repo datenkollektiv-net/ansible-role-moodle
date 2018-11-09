@@ -1,0 +1,8 @@
+# Change password to make sure we are always in sync
+# Watch out this will work on Moodle where the reset_password.php command accepts arguments
+- name: Moodle - Change admin password
+  command: >
+    php admin/cli/reset_password.php -u {{ moodle_site_admin.username }} -p {{ moodle_site_admin.password }} -i
+  args:
+    chdir: "{{ moodle_src_path }}"
+  when: moodle_site_source_stat is defined and moodle_state.moodle_is_installed|bool

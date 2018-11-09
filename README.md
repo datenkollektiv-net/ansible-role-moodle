@@ -13,6 +13,20 @@ Postgres or Mysql installed.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+## Role Tags
+
+You can skip installation steps by just doing:
+    
+    ansible-playbook <playbook>.yml --skip-tags "install"
+
+Or change password by:
+    ansible-playbook <playbook>.yml --skip-tags "install" --tags "task-pw"
+    
+Possible tag for direct tasks:
+- task-pull: will refresh the code
+- task-pw: will change password
+
+
 ## Dependencies
 
 No dependencies if the host is installed and setup with a LAMP stack 
@@ -34,6 +48,7 @@ MIT / BSD
 This role was created in 2017 by [Laurent David](https://github.com/laurentdavid), from 
 [Jeff Geerling](https://www.jeffgeerling.com/) roles templates author of 
 [Ansible for DevOps](https://www.ansiblefordevops.com/).
+
 
 ## Testing
 

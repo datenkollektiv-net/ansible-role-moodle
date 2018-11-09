@@ -1,12 +1,15 @@
 ---
 
-- import_tasks: setupdirs.yml
-- import_tasks: fetchsources.yml
-
 - name: Verify Ansible meets version requirements
   assert:
     that: "ansible_version.full is version_compare('2.5', '>=')"
     msg: "You must update Ansible to at least 2.5 to use this role."
+
+
+- import_tasks: setupdirs.yml
+  tags: install
+- import_tasks: fetchsources.yml
+  tags: install
 
 # This is using our custom module to check moodle state
 - name: Moodle - Check the state of current moodle
@@ -24,17 +27,17 @@
         group: "{{ moodle_webserver_group }}"
       notify: install moodle
   when: moodle_run_config|bool and moodle_site_source_stat is defined and not moodle_state.moodle_is_installed|bool
+  tags: install
+
+- import_tasks: changeadminpw.yml
+  tags: ['never', 'task-pw']
+
+- import_tasks: pullcode.yml
+  tags: ['never', 'task-pull']
+
 
 - name: Moodle - Launch update (if needed)
   command:  /bin/true
   notify: upgrade moodle
   when: moodle_run_config|bool and moodle_site_source_stat is defined and moodle_state.moodle_needs_upgrading|bool
-
-# Change password to make sure we are always in sync
-# Watch out this will work on Moodle where the reset_password.php command accepts arguments
-- name: Moodle - Change admin password
-  command: >
-    php admin/cli/reset_password.php -u {{ moodle_site_admin.username }} -p {{ moodle_site_admin.password }} -i
-  args:
-    chdir: "{{ moodle_src_path }}"
-  when: moodle_site_source_stat is defined and moodle_state.moodle_is_installed|bool
+  tags: update

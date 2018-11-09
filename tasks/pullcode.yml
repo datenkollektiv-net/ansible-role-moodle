@@ -1,0 +1,23 @@
+---
+
+
+# Fetch moodle source from a git repository
+- name: Moodle- Refresh code by doing a pull if necessary
+  git:
+    repo: "{{ moodle_git_url }}"
+    dest: "{{ moodle_src_path }}"
+    version: "{{ moodle_version }}"
+    depth: 1 # Only shallow cloning. Can be fixed if needed later to have the full history (git pull --unshallow)
+    key_file: "{{ moodle_git_key_file }}"
+    update: yes # Do the pull
+  become_user: "{{ moodle_webserver_user }}" # Check out as www-data
+
+
+- name: Moodle- Make sure all source file belongs to the webserver user
+  file:
+    path: "{{ moodle_src_path }}"
+    owner: "{{ moodle_webserver_user }}"
+    group: "{{ moodle_webserver_group }}"
+    recurse: yes
+  changed_when: False
+
