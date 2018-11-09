@@ -22,7 +22,7 @@
     state: directory
     owner: "{{ moodle_webserver_user }}"
     group: "{{ moodle_webserver_group }}"
-    mode: "u=rwx,g=rwx,o=r"
+    mode: "u=rwx,g=rwx,o=rx"
   become: yes
 
 - name: Moodle- Create local data directory if it does not exist
@@ -31,7 +31,7 @@
     state: directory
     owner: "{{ moodle_webserver_user }}"
     group: "{{ moodle_webserver_group }}"
-    mode: "u=rwx,g=rwx,o=r"
+    mode: "u=rwx,g=rwx,o=rx"
   become: yes
 
 - name: Moodle- Create local cache directory if it does not exist
@@ -40,7 +40,7 @@
     state: directory
     owner: "{{ moodle_webserver_user }}"
     group: "{{ moodle_webserver_group }}"
-    mode: "u=rwx,g=rwx,o=r"
+    mode: "u=rwx,g=rwx,o=rx"
   become: yes
 
 - name: Moodle- Create shared directories if it does not exist
@@ -49,7 +49,7 @@
     state: directory
     owner: "{{ moodle_webserver_user }}"
     group: "{{ moodle_webserver_group }}"
-    mode: "u=rwx,g=rwx,o=r"
+    mode: "u=rwx,g=rwx,o=rx"
   become: yes
   when: shared_drive_subfolder_create|bool
 
@@ -59,7 +59,7 @@
     state: directory
     owner: "{{ moodle_webserver_user }}"
     group: "{{ moodle_webserver_group }}"
-    mode: "u=rwx,g=rwx,o=r"
+    mode: "u=rwx,g=rwx,o=rx"
   become: yes
   when: shared_drive_subfolder_create|bool
 
@@ -69,6 +69,6 @@
     state: directory
     owner: "{{ moodle_webserver_user }}"
     group: "{{ moodle_webserver_group }}"
-    mode: "u=rwx,g=rwx,o=r"
+    mode: "u=rwx,g=rwx,o=rx"
   become: yes
   when: shared_drive_subfolder_create|bool

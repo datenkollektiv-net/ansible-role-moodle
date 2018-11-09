@@ -1,0 +1,9 @@
+---
+
+- name: Moodle - Setup cron on local server
+  cron:
+    name: "Moodle Cron"
+    minute: "{{ moodle_cron_mins }}"
+    hour: "*"
+    user: "{{ moodle_webserver_user }}"
+    job: "/usr/bin/php {{ moodle_src_path }}/admin/cli/cron.php"

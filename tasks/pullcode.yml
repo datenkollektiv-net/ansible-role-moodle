@@ -3,13 +3,15 @@
 
 # Fetch moodle source from a git repository
 - name: Moodle- Refresh code by doing a pull if necessary
-  git:
-    repo: "{{ moodle_git_url }}"
-    dest: "{{ moodle_src_path }}"
-    version: "{{ moodle_version }}"
-    depth: 1 # Only shallow cloning. Can be fixed if needed later to have the full history (git pull --unshallow)
-    key_file: "{{ moodle_git_key_file }}"
-    update: yes # Do the pull
+  block:
+    - git:
+        repo: "{{ moodle_git_url }}"
+        dest: "{{ moodle_src_path }}"
+        version: "{{ moodle_version }}"
+        depth: 1 # Only shallow cloning. Can be fixed if needed later to have the full history (git pull --unshallow)
+        key_file: "{{ moodle_git_key_file }}"
+        update: yes # Do the pull
+    - command: /usr/bin/php {{ moodle_src_path }}/admin/cli/purge_caches.php
   become_user: "{{ moodle_webserver_user }}" # Check out as www-data
 
 

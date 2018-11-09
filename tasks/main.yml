@@ -35,6 +35,11 @@
 - import_tasks: pullcode.yml
   tags: ['never', 'task-pull']
 
+# Optionally setup cron (i.e. it is only meaninful on non-docker environments)
+- import_tasks: setupcron.yml
+  tags: ['never', 'task-setupcron']
+
+
 
 - name: Moodle - Launch update (if needed)
   command:  /bin/true

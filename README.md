@@ -25,6 +25,7 @@ Or change password by:
 Possible tag for direct tasks:
 - task-pull: will refresh the code
 - task-pw: will change password
+- task-setupcron: will setup cron every moodle_cron_min
 
 
 ## Dependencies

@@ -63,4 +63,7 @@ shared_drive_subfolder_create: true
 
 patch_to_apply: []
 
+# Other
 
+# Interval in minutes to run the cron
+moodle_cron_mins: 15
