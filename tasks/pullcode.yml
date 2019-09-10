@@ -11,6 +11,7 @@
         depth: 1 # Only shallow cloning. Can be fixed if needed later to have the full history (git pull --unshallow)
         key_file: "{{ moodle_git_key_file }}"
         update: yes # Do the pull
+        recursive: yes
     - command: /usr/bin/php {{ moodle_src_path }}/admin/cli/purge_caches.php
   become_user: "{{ moodle_webserver_user }}" # Check out as www-data
 
