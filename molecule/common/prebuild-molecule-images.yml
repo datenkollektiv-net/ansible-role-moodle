@@ -1,0 +1,21 @@
+---
+
+# This uses ansible bender to create prebuild images and push them
+
+- name: Build Image
+  hosts: all
+  vars:
+    image_name: "debian10"
+    ansible_bender:
+      base_image: "geerlingguy/docker-{{ image_name }}-ansible:latest"
+
+      working_container:
+        volumes:
+          - '{{ playbook_dir }}:/playbookcommon'
+          - '{{ playbook_dir }}/../../tasks:/rolemoodletasks'
+
+      target_image:
+        name: "calllearning/docker-{{ image_name }}-role-moodle"
+        working_dir: /playbookcommon
+        labels:
+          built-by: "CALL-Learning"

@@ -12,8 +12,26 @@
   delegate_to: localhost
   changed_when: false
 
-- name: Do a database dump
-  command: chdir="{{ moodle_src_path }}" "moosh sql-dump >/tmp/dbdump.sql"
+- name: Do a database dump - Mysql
+  mysql_db:
+    name: "{{ moodle_database.dbname }}"
+    state: dump
+    target: /tmp/dbdump.sql
+  become: true
+  delegate_to: "{{ database_host }}"
+  delegate_facts: True
+  when: dbengine == 'postgres'
+  changed_when: false
+
+- name: Do a database dump - Postgres
+  postgresql_db:
+    name: "{{ moodle_database.dbname }}"
+    state: dump
+    target: /tmp/dbdump.sql
+  become: true
+  delegate_to: "{{ database_host }}"
+  delegate_facts: True
+  when: dbengine == 'postgres'
   changed_when: false
 
 - name: Compress archive
@@ -28,7 +46,7 @@
   fetch:
     src: "/tmp/dbdump.sql.gz"
     flat: true
-    dest: "{{ local_dump_folder }}/moodledata-{{ inventory_hostname }}.{{ ansible_date_time.epoch }}.tar.gz"
+    dest: "{{ local_dump_folder }}/dbdump-{{ inventory_hostname }}.{{ ansible_date_time.epoch }}.tar.gz"
 
 - name: Delete Archive
   file:

@@ -36,9 +36,11 @@ moodle_site_admin:
   email: "admin@example.com"
   password: "PasswordM00dle%"
 
+dbengine: "postgres" # Can also be mysql
+
 # Moodle database details
 moodle_database:
-  dbtype: "pgsql"
+  dbtype: "pgsql"  # Moodle code for driver, can be mysqli, mariadb, pgsql
   dbhost: "localhost"
   dbname: "moodle"
   dbuser: "username"
@@ -62,6 +64,8 @@ moodle_extra_db_options: []
 moodle_run_config: true
 
 shared_drive_subfolder_create: true
+moodle_force_source_update: true  # This should always be true unless you might have local
+# modifications
 
 patch_to_apply: []
 

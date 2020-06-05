@@ -1,0 +1,29 @@
+---
+
+- name: Prebuild Image
+  hosts: all
+  become: true
+
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: Import Moodle PHP Setup role to set the web server config
+      import_tasks: ../rolemoodletasks/tasks/phpsql-setup.yml # This is a mapped volume
+      # In ansible bender
+  roles:
+    - role: geerlingguy.repo-remi
+      when: ansible_os_family == 'RedHat'
+    # Database install (we install both here)
+    - name: geerlingguy.postgresql
+    - name: geerlingguy.mysql
+    # Then apache
+    - geerlingguy.apache
+    - geerlingguy.php-versions
+    - geerlingguy.php
+    # Then PHP Database libraries
+    - name: geerlingguy.php-mysql
+    - name: geerlingguy.php-pgsql
+    # Other dependencies such as composer
+    - name: geerlingguy.composer
+    - name: geerlingguy.git

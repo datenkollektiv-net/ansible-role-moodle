@@ -1,6 +1,7 @@
 ---
 dependency:
   name: galaxy
+  requirements-file: ../common/requirements.yml
 driver:
   name: docker
 lint: |
@@ -9,8 +10,8 @@ lint: |
   ansible-lint
   flake8
 platforms:
-  - name: instance
-    image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:latest"
+  - name: instance   # Use the prebuilt images so to test faster
+    image: "calllearning/docker-${MOLECULE_DISTRO:-ubuntu1804}-role-moodle:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro

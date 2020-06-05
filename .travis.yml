@@ -16,7 +16,9 @@ install:
 
 script:
   # Run tests  - default scenario then posgres and update scenarios
-  - molecule test --all
+  - molecule test --scenario-name=default
+  - molecule test --scenario-name=postgres
+  - molecule test --scenario-name=update
   - nosetests -library/test_check_moodle.py
 
 notifications:
