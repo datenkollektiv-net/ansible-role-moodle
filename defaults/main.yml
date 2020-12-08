@@ -52,7 +52,7 @@ moodle_site_shortname: "MTS"
 # Extra configuration parameters
 
 moodle_extra_conf:
-  - {name: noemailever, value: 'true'}
+  - {name: noemailever, value: 'false'}
   - {name: debug, value: '(E_ALL | E_STRICT)'}
 
 # Additional database options
